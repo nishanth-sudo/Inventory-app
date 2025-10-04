@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Movements - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-exchange-alt"></i> Product Movements</h2>
+    <a href="{{ url_for('add_movement') }}" class="btn btn-warning">
+        <i class="fas fa-plus"></i> Add Movement
+    </a>
+</div>
+
+{% if movements %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Movement ID</th>
+                <th>Timestamp</th>
+                <th>Product</th>
+                <th>From Location</th>
+                <th>To Location</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movement in movements %}
+            <tr>
+                <td><strong>{{ movement.movement_id }}</strong></td>
+                <td>{{ movement.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ movement.product.name }}</td>
+                <td>
+                    {% if movement.from_location %}
+                        {{ movement.from_loc.name if movement.from_loc else 'Unknown' }}
+                    {% else %}
+                        <span class="text-muted">External</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if movement.to_location %}
+                        {{ movement.to_loc.name if movement.to_loc else 'Unknown' }}
+                    {% else %}
+                        <span class="text-muted">External</span>
+                    {% endif %}
+                </td>
+                <td><span class="badge bg-primary">{{ movement.qty }}</span></td>
+                <td>
+                    <a href="{{ url_for('edit_movement', movement_id=movement.movement_id) }}" 
+                       class="btn btn-sm btn-outline-warning">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{{ url_for('delete_movement', movement_id=movement.movement_id) }}" 
+                       class="btn btn-sm btn-outline-danger"
+                       onclick="return confirm('Are you sure you want to delete this movement?')">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+    <i class="fas fa-info-circle"></i> No movements found. 
+    <a href="{{ url_for('add_movement') }}" class="alert-link">Add your first movement</a>
+</div>
+{% endif %}
+{% endblock %}
+
+

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Add Movement - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-plus"></i> Add New Movement</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="movement_id" class="form-label">Movement ID *</label>
+                        <input type="text" class="form-control" id="movement_id" name="movement_id" required>
+                        <div class="form-text">Unique identifier for the movement</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="product_id" class="form-label">Product *</label>
+                        <select class="form-select" id="product_id" name="product_id" required>
+                            <option value="">Select a product</option>
+                            {% for product in products %}
+                            <option value="{{ product.product_id }}">{{ product.product_id }} - {{ product.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="from_location" class="form-label">From Location</label>
+                                <select class="form-select" id="from_location" name="from_location">
+                                    <option value="">Select source location (leave blank for external)</option>
+                                    {% for location in locations %}
+                                    <option value="{{ location.location_id }}">{{ location.location_id }} - {{ location.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="to_location" class="form-label">To Location</label>
+                                <select class="form-select" id="to_location" name="to_location">
+                                    <option value="">Select destination location (leave blank for external)</option>
+                                    {% for location in locations %}
+                                    <option value="{{ location.location_id }}">{{ location.location_id }} - {{ location.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="qty" class="form-label">Quantity *</label>
+                        <input type="number" class="form-control" id="qty" name="qty" min="1" required>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Note:</strong> Either "From Location" or "To Location" must be specified. 
+                        Leave one blank to indicate external source/destination.
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('movements') }}" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-warning">Add Movement</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fromLocation = document.getElementById('from_location');
+    const toLocation = document.getElementById('to_location');
+    
+    function updateLocationOptions() {
+        const fromValue = fromLocation.value;
+        const toValue = toLocation.value;
+        
+        // Disable the same location in the other dropdown
+        Array.from(toLocation.options).forEach(option => {
+            if (option.value === fromValue && fromValue !== '') {
+                option.disabled = true;
+            } else {
+                option.disabled = false;
+            }
+        });
+        
+        Array.from(fromLocation.options).forEach(option => {
+            if (option.value === toValue && toValue !== '') {
+                option.disabled = true;
+            } else {
+                option.disabled = false;
+            }
+        });
+    }
+    
+    fromLocation.addEventListener('change', updateLocationOptions);
+    toLocation.addEventListener('change', updateLocationOptions);
+});
+</script>
+{% endblock %}
+
+
