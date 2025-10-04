@@ -307,3 +307,14 @@ For support and questions:
 ---
 
 **Note**: This is a development version. For production use, please implement proper security measures, use a production database, and configure HTTPS.
+
+
+Sample Screenshots:
+image.png
+image.png
+
+image.png
+image.png
+image.png
+image.png
+image.png
