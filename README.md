@@ -311,8 +311,11 @@ For support and questions:
 
 ## Sample Screenshots:
 ![alt text](<screenshots/Screenshot (183).png>)
+Fig -1: User authentication page
 ![alt text](<screenshots/Screenshot (184).png>)
+Fig 2: Home page
 ![alt text](<screenshots/Screenshot (185).png>)
+
 ![alt text](<screenshots/Screenshot (186).png>)
 ![alt text](<screenshots/Screenshot (187).png>)
 ![alt text](<screenshots/Screenshot (188).png>)
