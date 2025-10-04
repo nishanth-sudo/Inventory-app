@@ -22,11 +22,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
     forms.forEach(function(form) {
         form.addEventListener('submit', function(event) {
-            if (!form.checkValidity()) {
+            // Only prevent submission if there are actual validation errors
+            // Don't prevent submission for missing required fields if they're not critical
+            const requiredFields = form.querySelectorAll('[required]');
+            let hasErrors = false;
+            
+            requiredFields.forEach(function(field) {
+                if (!field.value.trim()) {
+                    hasErrors = true;
+                }
+            });
+            
+            if (hasErrors) {
                 event.preventDefault();
                 event.stopPropagation();
+                form.classList.add('was-validated');
             }
-            form.classList.add('was-validated');
         });
     });
 
@@ -232,11 +243,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loading states to forms
     const submitButtons = document.querySelectorAll('button[type="submit"]');
     submitButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(event) {
             const form = this.closest('form');
-            if (form && form.checkValidity()) {
-                this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
-                this.disabled = true;
+            if (form) {
+                // Check if form has required fields and they are filled
+                const requiredFields = form.querySelectorAll('[required]');
+                let canSubmit = true;
+                
+                requiredFields.forEach(function(field) {
+                    if (!field.value.trim()) {
+                        canSubmit = false;
+                    }
+                });
+                
+                if (canSubmit) {
+                    // Add a small delay to allow form submission to proceed
+                    setTimeout(() => {
+                        this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+                        this.disabled = true;
+                    }, 100);
+                }
             }
         });
     });
@@ -291,5 +317,6 @@ function showToast(message, type = 'info') {
         toast.remove();
     });
 }
+
 
 
