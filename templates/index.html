@@ -5,12 +5,9 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="jumbotron bg-light p-5 rounded">
-            <h1 class="display-4">
-                <i class="fas fa-tachometer-alt text-primary"></i>
-                Dashboard
-            </h1>
-            <p class="lead">Welcome back, {{ current_user.username }}! Here's your inventory overview.</p>
+        <div class="jumbotron">
+            <h1>📊 Dashboard</h1>
+            <p>Welcome back, {{ current_user.username }}! Here's your inventory overview.</p>
         </div>
     </div>
 </div>
@@ -26,7 +23,7 @@
                         <p class="mb-0">Total Products</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="fas fa-box fa-2x"></i>
+                        📦
                     </div>
                 </div>
             </div>
@@ -41,7 +38,7 @@
                         <p class="mb-0">Total Locations</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="fas fa-map-marker-alt fa-2x"></i>
+                        📍
                     </div>
                 </div>
             </div>
@@ -56,7 +53,7 @@
                         <p class="mb-0">Total Movements</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="fas fa-exchange-alt fa-2x"></i>
+                        🔄
                     </div>
                 </div>
             </div>
@@ -67,11 +64,11 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h4><i class="fas fa-chart-line"></i></h4>
+                        <h4>📈</h4>
                         <p class="mb-0">Analytics Ready</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="fas fa-chart-bar fa-2x"></i>
+                        📊
                     </div>
                 </div>
             </div>
@@ -84,7 +81,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0"><i class="fas fa-clock"></i> Recent Movements</h5>
+                <h5 class="mb-0">🕐 Recent Movements</h5>
             </div>
             <div class="card-body">
                 {% if recent_movements %}
@@ -104,10 +101,10 @@
                             <tbody>
                                 {% for movement in recent_movements %}
                                 <tr>
-                                    <td><code>{{ movement.movement_id }}</code></td>
+                                    <td><strong>{{ movement.movement_id }}</strong></td>
                                     <td>{{ movement.product.name }}</td>
                                     <td>
-                                        <span class="badge bg-{{ 'success' if movement.get_movement_type() == 'Inbound' else 'danger' if movement.get_movement_type() == 'Outbound' else 'info' }}">
+                                        <span class="badge badge-{{ 'success' if movement.get_movement_type() == 'Inbound' else 'danger' if movement.get_movement_type() == 'Outbound' else 'info' }}">
                                             {{ movement.get_movement_type() }}
                                         </span>
                                     </td>
@@ -124,7 +121,7 @@
                         <a href="{{ url_for('movements') }}" class="btn btn-primary">View All Movements</a>
                     </div>
                 {% else %}
-                    <p class="text-muted">No movements recorded yet.</p>
+                    <p class="text-center">No movements recorded yet.</p>
                 {% endif %}
             </div>
         </div>
@@ -137,9 +134,9 @@
     <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
-                <i class="fas fa-box fa-3x text-primary mb-3"></i>
-                <h5 class="card-title">Products</h5>
-                <p class="card-text">Manage your product catalog</p>
+                <h1>📦</h1>
+                <h5>Products</h5>
+                <p>Manage your product catalog</p>
                 <a href="{{ url_for('products') }}" class="btn btn-primary">Manage Products</a>
             </div>
         </div>
@@ -147,9 +144,9 @@
     <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
-                <i class="fas fa-map-marker-alt fa-3x text-success mb-3"></i>
-                <h5 class="card-title">Locations</h5>
-                <p class="card-text">Manage warehouse locations</p>
+                <h1>📍</h1>
+                <h5>Locations</h5>
+                <p>Manage warehouse locations</p>
                 <a href="{{ url_for('locations') }}" class="btn btn-success">Manage Locations</a>
             </div>
         </div>
@@ -157,24 +154,22 @@
     <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
-                <i class="fas fa-plus-circle fa-3x text-warning mb-3"></i>
-                <h5 class="card-title">New Movement</h5>
-                <p class="card-text">Record new stock movement</p>
-                <a href="{{ url_for('add_movement') }}" class="btn btn-warning">Add Movement</a>
+                <h1>➕</h1>
+                <h5>New Movement</h5>
+                <p>Record new stock movement</p>
+                <a href="{{ url_for('add_movement') }}" class="btn btn-warning text-white">Add Movement</a>
             </div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
-                <i class="fas fa-chart-bar fa-3x text-info mb-3"></i>
-                <h5 class="card-title">Balance Report</h5>
-                <p class="card-text">View inventory balances</p>
-                <a href="{{ url_for('balance') }}" class="btn btn-info">View Report</a>
+                <h1>📊</h1>
+                <h5>Balance Report</h5>
+                <p>View inventory balances</p>
+                <a href="{{ url_for('balance') }}" class="btn btn-info text-white">View Report</a>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
-
-

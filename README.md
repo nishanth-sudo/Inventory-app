@@ -310,13 +310,14 @@ For support and questions:
 
 
 ## Sample Screenshots:
-![alt text](<screenshots/Screenshot (183).png>)
+![alt text](<screenshots/Screenshot (197).png>)
+![alt text](<screenshots/Screenshot (198).png>)
 Fig -1: User authentication page
-![alt text](<screenshots/Screenshot (184).png>)
+![alt text](<screenshots/Screenshot (191).png>)
 Fig 2: Home page
-![alt text](<screenshots/Screenshot (185).png>)
+![alt text](<screenshots/Screenshot (192).png>)
 
-![alt text](<screenshots/Screenshot (186).png>)
-![alt text](<screenshots/Screenshot (187).png>)
-![alt text](<screenshots/Screenshot (188).png>)
-![alt text](<screenshots/Screenshot (189).png>)
+![alt text](<screenshots/Screenshot (193).png>)
+![alt text](<screenshots/Screenshot (194).png>)
+![alt text](<screenshots/Screenshot (195).png>)
+![alt text](<screenshots/Screenshot (195).png>)

@@ -1,20 +1,43 @@
 // Inventory Management System JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
+    // Mobile menu toggle
+    const navbarToggle = document.getElementById('navbarToggle');
+    const navbarMenu = document.getElementById('navbarMenu');
+    
+    if (navbarToggle && navbarMenu) {
+        navbarToggle.addEventListener('click', function() {
+            navbarMenu.classList.toggle('active');
+        });
+    }
+
+    // Dropdown toggle for user menu
+    const dropdownToggle = document.getElementById('userDropdown');
+    if (dropdownToggle) {
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdownMenu = this.nextElementSibling;
+            if (dropdownMenu) {
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                const dropdowns = document.querySelectorAll('.dropdown-menu');
+                dropdowns.forEach(function(dropdown) {
+                    dropdown.style.display = 'none';
+                });
+            }
+        });
+    }
 
     // Auto-hide alerts after 5 seconds
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(function(alert) {
-        if (!alert.querySelector('.btn-close')) return;
-        
         setTimeout(function() {
-            const bsAlert = new bootstrap.Alert(alert);
-            bsAlert.close();
+            alert.style.display = 'none';
         }, 5000);
     });
 
@@ -23,20 +46,21 @@ document.addEventListener('DOMContentLoaded', function() {
     forms.forEach(function(form) {
         form.addEventListener('submit', function(event) {
             // Only prevent submission if there are actual validation errors
-            // Don't prevent submission for missing required fields if they're not critical
             const requiredFields = form.querySelectorAll('[required]');
             let hasErrors = false;
             
             requiredFields.forEach(function(field) {
                 if (!field.value.trim()) {
                     hasErrors = true;
+                    field.style.borderColor = '#e74c3c';
+                } else {
+                    field.style.borderColor = '';
                 }
             });
             
             if (hasErrors) {
                 event.preventDefault();
                 event.stopPropagation();
-                form.classList.add('was-validated');
             }
         });
     });
@@ -63,14 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const toValue = toLocation.value;
                 
                 if (!fromValue && !toValue) {
-                    fromLocation.setCustomValidity('Either From Location or To Location must be specified');
-                    toLocation.setCustomValidity('Either From Location or To Location must be specified');
+                    alert('Either From Location or To Location must be specified');
                 } else if (fromValue === toValue && fromValue !== '') {
-                    fromLocation.setCustomValidity('From Location and To Location cannot be the same');
-                    toLocation.setCustomValidity('From Location and To Location cannot be the same');
-                } else {
-                    fromLocation.setCustomValidity('');
-                    toLocation.setCustomValidity('');
+                    alert('From Location and To Location cannot be the same');
                 }
             }
             
